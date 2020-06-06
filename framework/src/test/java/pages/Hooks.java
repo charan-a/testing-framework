@@ -1,4 +1,4 @@
-package steps;
+package pages;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,8 +22,8 @@ public class Hooks extends Gestures {
     	DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("platformName","Android");
 		capabilities.setCapability("deviceName", "Android Device");
-		capabilities.setCapability("appPackage", "io.appium.android.apis");
-        capabilities.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+		capabilities.setCapability("appPackage", "com.androidsample.generalstore");
+        capabilities.setCapability("appActivity", "com.androidsample.generalstore.SplashActivity");
         act.androidDriver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 	    System.out.println("App Opened");
 	    act.androidDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @CucumberOptions (
 		features = {"src/test/java/featurefiles/"},
-		glue = {"steps"},
+		glue = {"pages"},
 		strict = true,
 		monochrome = true
 		//tags = {}

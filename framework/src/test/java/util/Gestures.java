@@ -2,6 +2,7 @@ package util;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
@@ -10,21 +11,25 @@ import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MultiTouchAction;
-import io.appium.java_client.PerformsTouchActions;
-
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.touch.offset.ElementOption;
 import static io.appium.java_client.touch.TapOptions.tapOptions;
 import static io.appium.java_client.touch.WaitOptions.waitOptions;
 import static io.appium.java_client.touch.offset.ElementOption.element;
 import static io.appium.java_client.touch.LongPressOptions.longPressOptions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
+
 		
 public class Gestures {
 	protected static AndroidDriver<AndroidElement> androidDriver;
@@ -44,12 +49,13 @@ public class Gestures {
 	}
     
 	public void tapByElement(String obj) throws Exception {
-		AndroidElement androidElement = androidDriver.findElement(By.xpath(reader.getXpath(obj)));
         try {
+        	AndroidElement androidElement = androidDriver.findElement(By.xpath(reader.getXpath(obj)));
         	new TouchAction(this.androidDriver)
             .tap(tapOptions().withElement(element(androidElement)))
             .waitAction(waitOptions(Duration.ofMillis(650))).perform();
-        	System.out.printf("passed clicks on " + obj);
+        	
+        	act.androidDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         } catch (Exception e) {
             System.out.println(obj);
             System.out.println(e);
@@ -129,15 +135,40 @@ public class Gestures {
 	}
 		
 	
-	public void scrolltotext(String text) {
+	public void scrollandclick(String text) {
 		try {
-		androidDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"));");
+			AndroidElement androidElement = androidDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"));");
+			androidElement.click();
 		}catch(Exception e) {
 			System.out.println(text);
 	        System.out.println(e);
 			}
 		}
+	public void homeback() {
+		try {
+			//((AndroidDriver) androidDriver).pressKeyCode(AndroidKeyCode.BACK);
+			androidDriver.navigate().back();
+			
+		}catch(Exception e) {
+	        System.out.println(e);
+			}
+		}
+	public void additems(String string, String string2) throws IOException {
+		int i=Integer.parseInt(string2);
+		AndroidElement first = androidDriver.findElements(By.xpath(reader.getXpath(string))).get(i);
+		first.click();
+		
 	}
+	public void isdisplayped(String path) {
+		try {
+			androidDriver.findElement(By.xpath(reader.getXpath(path))).isDisplayed();
+		}catch(Exception e) {
+			System.out.println(path);
+			System.out.println(e);
+		}
+	}
+}
+	
    
 	
 	
