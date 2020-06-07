@@ -11,11 +11,10 @@ public class products_page {
     public products_page(Gestures act) {
         this.act = act;
     }
-    @Then("{string} page should be displayed")
-    public void page_should_be_displayed(String string) {
-        act.isdisplayped(string);
+    @Then("User should be navigated to {string}")
+    public void user_should_be_navigated_to(String string) {
+    	act.isdisplayped(string);
     }
-    //
     @And("{string} items {string}")
     public void items(String string, String string2) throws IOException {
     	act.additems(string, string2);

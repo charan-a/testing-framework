@@ -38,14 +38,15 @@ public class Gestures {
     private Gestures act;
     
     
-    private String getWebContext(AppiumDriver driver) {
-	    ArrayList<String> contexts = new ArrayList(driver.getContextHandles());
+    public void getWebContext() {
+	    ArrayList<String> contexts = new ArrayList(androidDriver.getContextHandles());
 	    for (String context : contexts) {
+	    	System.out.println("context is " + context);
 	        if (!context.equals("NATIVE_APP")) {
-	            return context;
+	            androidDriver.context(context);
+	            break;
 	        }
 	    }
-	    return null;
 	}
     
 	public void tapByElement(String obj) throws Exception {
@@ -54,7 +55,6 @@ public class Gestures {
         	new TouchAction(this.androidDriver)
             .tap(tapOptions().withElement(element(androidElement)))
             .waitAction(waitOptions(Duration.ofMillis(650))).perform();
-        	
         	act.androidDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         } catch (Exception e) {
             System.out.println(obj);
@@ -68,6 +68,7 @@ public class Gestures {
 		try {
 			AndroidElement androidElement = androidDriver.findElement(By.xpath(reader.getXpath(path)));
 			androidElement.sendKeys(value);
+			act.androidDriver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
 		}catch(Exception e) {
 			System.out.println(path);
             System.out.println(e);

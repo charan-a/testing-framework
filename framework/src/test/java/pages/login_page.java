@@ -27,12 +27,15 @@ public class login_page {
     public void user_scroll_to_and_clicks_it(String string) {
     	act.scrollandclick(string);
     }
-    @And("User enters {string}")
-	public void user_enters(String string, io.cucumber.datatable.DataTable dataTable) {
-		List<List<String>> data = dataTable.asLists(String.class);
-		String s = data.get(0).get(1);
-		act.passvalues(s , string);
-	}
+    @Given("User enters {string} with data at {string} {string}")
+    public void user_enters_with_data_at(String string, String string2, String string3, io.cucumber.datatable.DataTable dataTable) {
+    	int i1 = Integer.parseInt(string2);
+    	int i2 = Integer.parseInt(string3);
+    	List<List<String>> data = dataTable.asLists(String.class);
+		String value = data.get(i1).get(i2);
+		act.passvalues(value , string);
+    }
+	
     @And("User clicks home back button")
     public void user_clicks_home_back_button() {
     	act.homeback();
